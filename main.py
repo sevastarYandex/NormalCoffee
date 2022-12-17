@@ -3,12 +3,14 @@ from PyQt6 import uic
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMainWindow, QApplication, QWidget, QDialog, QMessageBox
 from PyQt6.QtSql import QSqlDatabase, QSqlQueryModel
+from addEditCoffeeFormUI import Ui_Dialog
+from mainUI import Ui_MainWindow
 
 
-class CoffeeDialog(QDialog):
+class CoffeeDialog(QDialog, Ui_Dialog):
     def __init__(self, varieties, degrees, makings, storages):
         super().__init__()
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.varietyBox.addItems(varieties)
         self.degreeBox.addItems(degrees)
         self.makingBox.addItems(makings)
@@ -49,7 +51,7 @@ class EditCoffeeDialog(CoffeeDialog):
         self.sizeBox.setValue(info[6])
 
 
-class MainWindow(QMainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.initDB()
@@ -90,7 +92,7 @@ class MainWindow(QMainWindow):
         self.STORAGES = ['beans', 'ground']
 
     def initUI(self):
-        uic.loadUi('main.ui', self)
+        self.setupUi(self)
         self.view.setModel(self.model)
         self.widget = QWidget()
         self.setCentralWidget(self.widget)
